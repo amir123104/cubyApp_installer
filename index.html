@@ -4,78 +4,963 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cuby App Download</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --pure-black: #000000;
+            --dark-gray: #1a1a1a;
+            --medium-gray: #333333;
+            --light-gray: #666666;
+            --lighter-gray: #999999;
+            --lightest-gray: #cccccc;
+            --off-white: #f5f5f5;
+            --pure-white: #ffffff;
+            --border-gray: #e5e5e5;
+        }
+        
+        * {
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
         body {
+            background-color: var(--pure-white);
+            color: var(--pure-black);
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #1a1a1a, #333);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Geometric background pattern */
+        body:before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 0, 0, 0.03) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(0, 0, 0, 0.03) 0%, transparent 20%),
+                linear-gradient(45deg, transparent 49%, rgba(0, 0, 0, 0.02) 50%, transparent 51%),
+                linear-gradient(-45deg, transparent 49%, rgba(0, 0, 0, 0.02) 50%, transparent 51%);
+            background-size: 400px 400px;
+            opacity: 0.6;
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 80px;
+            position: relative;
+        }
+        
+        .logo {
+            font-size: 3.8rem;
+            font-weight: 800;
+            color: var(--pure-black);
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+            display: inline-block;
+            position: relative;
+        }
+        
+        .logo:after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 4px;
+            background: var(--pure-black);
+        }
+        
+        .tagline {
+            color: var(--light-gray);
+            font-size: 1.25rem;
+            font-weight: 400;
+            max-width: 700px;
+            margin: 30px auto 0;
+            line-height: 1.6;
+        }
+        
+        .card {
+            background: var(--pure-white);
+            border-radius: 24px;
+            padding: 50px;
+            margin-bottom: 40px;
+            border: 2px solid var(--pure-black);
+            box-shadow: 12px 12px 0px 0px var(--pure-black);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 16px 16px 0px 0px var(--pure-black);
+        }
+        
+        .card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--pure-black);
+        }
+        
+        .card-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: var(--pure-black);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .card-title i {
+            color: var(--pure-black);
+            background: var(--off-white);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--pure-black);
+        }
+        
+        .description {
+            color: var(--medium-gray);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 50px;
+            font-weight: 400;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .feature-card {
+            background: var(--off-white);
+            border-radius: 16px;
+            padding: 32px;
+            border: 2px solid var(--pure-black);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .feature-card:hover {
+            background: var(--pure-white);
+            transform: translateY(-8px);
+            box-shadow: 8px 8px 0px 0px var(--pure-black);
+        }
+        
+        .feature-card:nth-child(odd):before {
+            content: '◼';
+            position: absolute;
+            top: -12px;
+            left: -12px;
+            color: var(--pure-black);
+            font-size: 24px;
+            background: var(--pure-white);
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .feature-card:nth-child(even):before {
+            content: '◻';
+            position: absolute;
+            top: -12px;
+            left: -12px;
+            color: var(--pure-black);
+            font-size: 24px;
+            background: var(--pure-white);
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--pure-black);
+            margin-bottom: 24px;
+            background: var(--pure-white);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--pure-black);
+        }
+        
+        .feature-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--pure-black);
+        }
+        
+        .feature-desc {
+            color: var(--medium-gray);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+        
+        .download-section {
+            text-align: center;
+            padding: 60px 0;
+            background: var(--off-white);
+            border-radius: 20px;
+            border: 2px solid var(--pure-black);
+            margin: 60px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .download-section:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: repeating-linear-gradient(
+                90deg,
+                var(--pure-black),
+                var(--pure-black) 20px,
+                transparent 20px,
+                transparent 40px
+            );
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 22px 50px;
+            background: var(--pure-black);
+            color: var(--pure-white);
+            border: 2px solid var(--pure-black);
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            gap: 16px;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn:hover {
+            background: var(--pure-white);
+            color: var(--pure-black);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn:active {
+            transform: translateY(-2px);
+        }
+        
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .btn:hover:before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .btn-lg {
+            padding: 26px 60px;
+            font-size: 1.4rem;
+        }
+        
+        .download-info {
+            margin-top: 30px;
+            color: var(--light-gray);
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .version-badge {
+            display: inline-block;
+            background: var(--pure-black);
+            color: var(--pure-white);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-left: 12px;
+            border: 2px solid var(--pure-black);
+        }
+        
+        .system-requirements {
+            background: var(--off-white);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 60px;
+            border: 2px solid var(--pure-black);
+            position: relative;
+        }
+        
+        .requirements-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: var(--pure-black);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .requirements-title:before {
+            content: '⚙';
+            font-size: 1.8rem;
+        }
+        
+        .requirements-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            columns: 2;
+            column-gap: 40px;
+        }
+        
+        .requirements-list li {
+            color: var(--medium-gray);
+            margin-bottom: 16px;
+            padding-left: 36px;
+            position: relative;
+            font-size: 1.05rem;
+            break-inside: avoid;
+        }
+        
+        .requirements-list li:before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--pure-black);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 60px 0 40px;
+            color: var(--light-gray);
+            font-size: 1rem;
+            border-top: 2px solid var(--pure-black);
+            margin-top: 80px;
+            position: relative;
+        }
+        
+        .footer:before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--pure-black);
+        }
+        
+        .footer-links {
             display: flex;
             justify-content: center;
-            align-items: center;
-            height: 100vh;
-            color: rgb(49, 49, 49);
-            text-align: center;
+            gap: 40px;
+            margin-top: 30px;
+            flex-wrap: wrap;
         }
-
-        .box {
-            background: #fdfdfd;
-            padding: 40px;
-            border-radius: 18px;
-            box-shadow: 0 0 20px rgba(177, 177, 177, 0.5);
-            width: 350px;
-        }
-
-        h1 {
-            margin-bottom: 10px;
-        }
-
-        p {
-            margin-bottom: 30px;
-            color: #bbb;
-            line-height: 1.5;
-        }
-
-        .btn {
-            display: inline-block;
-            background: #4caf50;
-            padding: 15px 30px;
-            border-radius: 10px;
+        
+        .footer-links a {
+            color: var(--medium-gray);
             text-decoration: none;
-            color: white;
-            font-size: 20px;
-            font-weight: bold;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            transition: 0.2s;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            position: relative;
+            padding: 8px 0;
         }
-
-        .btn:hover {
-            background: #45a049;
-            transform: scale(1.05);
+        
+        .footer-links a:hover {
+            color: var(--pure-black);
         }
-
-        .footer {
-            margin-top: 25px;
-            font-size: 13px;
-            color: #777;
+        
+        .footer-links a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--pure-black);
+            transition: width 0.3s ease;
+        }
+        
+        .footer-links a:hover:after {
+            width: 100%;
+        }
+        
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+        
+        .screenshot {
+            border-radius: 16px;
+            overflow: hidden;
+            border: 2px solid var(--pure-black);
+            transition: transform 0.3s ease;
+            background: var(--pure-white);
+            aspect-ratio: 16/9;
+            position: relative;
+        }
+        
+        .screenshot:hover {
+            transform: translateY(-12px);
+            box-shadow: 8px 8px 0px 0px var(--pure-black);
+        }
+        
+        .screenshot-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--light-gray);
+            font-size: 1.1rem;
+            background: repeating-linear-gradient(
+                45deg,
+                var(--off-white),
+                var(--off-white) 20px,
+                var(--pure-white) 20px,
+                var(--pure-white) 40px
+            );
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+        
+        .stat-card {
+            background: var(--pure-white);
+            border-radius: 20px;
+            padding: 36px;
+            text-align: center;
+            border: 2px solid var(--pure-black);
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-8px);
+        }
+        
+        .stat-value {
+            font-size: 3.2rem;
+            font-weight: 800;
+            color: var(--pure-black);
+            margin-bottom: 12px;
+            line-height: 1;
+        }
+        
+        .stat-label {
+            font-size: 1.1rem;
+            color: var(--medium-gray);
+            font-weight: 500;
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            background: var(--pure-black);
+            color: var(--pure-white);
+            padding: 20px 28px;
+            border-radius: 12px;
+            box-shadow: 8px 8px 0px 0px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            animation: slideIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            display: none;
+            border: 2px solid var(--pure-black);
+            max-width: 400px;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%) scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0) scale(1);
+                opacity: 1;
+            }
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            margin-top: 12px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background: var(--pure-white);
+            transition: width 3s linear;
+        }
+        
+        @media (max-width: 1024px) {
+            .requirements-list {
+                columns: 1;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 20px;
+            }
+            
+            .logo {
+                font-size: 2.8rem;
+            }
+            
+            .card {
+                padding: 30px 20px;
+                margin-left: -10px;
+                margin-right: -10px;
+            }
+            
+            .card-title {
+                font-size: 1.6rem;
+            }
+            
+            .card-title i {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .btn-lg {
+                padding: 20px 40px;
+                font-size: 1.2rem;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .download-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .screenshot-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+            
+            .stat-value {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .logo {
+                font-size: 2.2rem;
+            }
+            
+            .tagline {
+                font-size: 1.1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="box">
-        <h1>Download CubyApp</h1>
-        <p>
-           Click the button below to download and install the application:
-        </p>
-
-        <a href="https://github.com/amir123104/cubyApp_installer/releases/download/v1.0.0/downloads-cubyApp.zip" 
-          download
-          style="padding: 10px 20px; background:#02c071; color:white; border-radius:8px; text-decoration:none;">
-          Download for Windows
-        </a>
-
-        <div class="footer">© 2025 Cuby Systems</div>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">CUBY</div>
+            <div class="tagline">
+                A minimalist, powerful desktop application designed for maximum productivity 
+                and seamless workflow management
+            </div>
+        </div>
+        
+        <!-- Stats Section -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" data-target="92">0</div>
+                <div class="stat-label">MB only</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" data-target="150">0</div>
+                <div class="stat-label">Active Users</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" data-target="91">0</div>
+                <div class="stat-label">% Satisfaction</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">v1.0</div>
+                <div class="stat-label">Latest Version</div>
+            </div>
+        </div>
+        
+        <!-- Main Card -->
+        <div class="card">
+            <div class="card-title">
+                <i class="fas fa-download"></i>
+                Download Cuby
+                <span class="version-badge">Version 1.0</span>
+            </div>
+            
+            <div class="description">
+            </div>
+            
+            <!-- Features Grid -->
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="feature-title">Performance Optimized</div>
+                    <div class="feature-desc">
+                        Engineered for speed with minimal resource footprint. Zero bloat, maximum efficiency.
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="feature-title">Complete Privacy</div>
+                    <div class="feature-desc">
+                        privecy First. built with firebase
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-infinity"></i>
+                    </div>
+                    <div class="feature-title">Easy.</div>
+                    <div class="feature-desc">
+                        Install, run, and your in.
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Screenshots -->
+            <div class="screenshot-grid">
+                <div class="screenshot">
+                    <div class="screenshot-placeholder">
+                        <i class="fas fa-desktop" style="font-size: 3rem; margin-bottom: 20px; color: var(--light-gray);"></i>
+                        <div style="font-weight: 600; color: var(--medium-gray);">Main Interface</div>
+                        <div style="font-size: 0.9rem; margin-top: 8px; color: var(--lighter-gray);">Clean, distraction-free workspace</div>
+                    </div>
+                </div>
+                <div class="screenshot">
+                    <div class="screenshot-placeholder">
+                        <i class="fas fa-sliders-h" style="font-size: 3rem; margin-bottom: 20px; color: var(--light-gray);"></i>
+                        <div style="font-weight: 600; color: var(--medium-gray);">Control Panel</div>
+                        <div style="font-size: 0.9rem; margin-top: 8px; color: var(--lighter-gray);">Advanced customization options</div>
+                    </div>
+                </div>
+                <div class="screenshot">
+                    <div class="screenshot-placeholder">
+                        <i class="fas fa-chart-bar" style="font-size: 3rem; margin-bottom: 20px; color: var(--light-gray);"></i>
+                        <div style="font-weight: 600; color: var(--medium-gray);">Easy connection</div>
+                        <div style="font-size: 0.9rem; margin-top: 8px; color: var(--lighter-gray);">Easy connection to your Cuby</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Download Section -->
+            <div class="download-section">
+                <a href="https://github.com/amir123104/cubyApp_installer/releases/download/v1.0.0/downloads-cubyApp.zip" 
+                   download 
+                   class="btn btn-lg"
+                   id="download-btn">
+                    <i class="fas fa-arrow-down"></i>
+                    Download
+                </a>
+                <div class="download-info">
+                    <span><i class="fas fa-hdd"></i> 239 KB Installer</span>
+                    <span><i class="fas fa-window-restore"></i> Windows 10/11 (64-bit)</span>
+                    <span><i class="fas fa-calendar-alt"></i> Updated: December 2025</span>
+                </div>
+            </div>
+            
+            <!-- System Requirements -->
+            <div class="system-requirements">
+                <div class="requirements-title">System Requirements</div>
+                <ul class="requirements-list">
+                    <li>Windows 10 version 1909 or higher</li>
+                    <li>Windows 11 any version</li>
+                    <li>2 GB RAM minimum (4 GB recommended)</li>
+                    <li>2 GB available storage space</li>
+                    <li>USB connection port</li>
+                    <li>Internet connection</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <div style="font-size: 0.95rem; color: var(--light-gray); margin-bottom: 10px;">
+                © 2024 Cuby Systems. All rights reserved.
+            </div>
+            <div class="footer-links">
+                <a href="#"><i class="fas fa-file-alt" style="margin-right: 8px;"></i>Documentation</a>
+                <a href="#"><i class="fas fa-lock" style="margin-right: 8px;"></i>Privacy</a>
+                <a href="#"><i class="fas fa-balance-scale" style="margin-right: 8px;"></i>Terms</a>
+                <a href="#"><i class="fas fa-question-circle" style="margin-right: 8px;"></i>Support</a>
+                <a href="#"><i class="fas fa-envelope" style="margin-right: 8px;"></i>Contact</a>
+            </div>
+        </div>
     </div>
+    
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <i class="fas fa-download" style="font-size: 1.5rem;"></i>
+        <div>
+            <div id="toast-message" style="font-weight: 600;">Starting download...</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize the application
+        function initApp() {
+            // Setup download button click handler
+            const downloadBtn = document.getElementById('download-btn');
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            const progressFill = document.getElementById('progress-fill');
+            
+            downloadBtn.addEventListener('click', function(e) {
+                // Show toast notification
+                toastMessage.textContent = 'Downloading Cuby v2.0...';
+                progressFill.style.width = '0%';
+                toast.style.display = 'flex';
+                
+                // Simulate download progress
+                setTimeout(() => {
+                    progressFill.style.width = '30%';
+                }, 500);
+                
+                setTimeout(() => {
+                    progressFill.style.width = '70%';
+                    toastMessage.textContent = 'Installer (92 MB) downloading...';
+                }, 1500);
+                
+                setTimeout(() => {
+                    progressFill.style.width = '100%';
+                    toastMessage.textContent = 'Download complete!';
+                    
+                    // Hide toast after 2 seconds
+                    setTimeout(() => {
+                        toast.style.display = 'none';
+                        progressFill.style.width = '0%';
+                    }, 2000);
+                }, 3000);
+                
+                // Optional: Track download (you can add analytics here)
+                console.log('Download started: Cuby v2.0');
+            });
+            
+            // Add click sound effect (optional)
+            const playClickSound = () => {
+                // Simple click sound simulation
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.value = 800;
+                oscillator.type = 'sine';
+                
+                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+                
+                oscillator.start();
+                oscillator.stop(audioContext.currentTime + 0.1);
+            };
+            
+            // Add sound to buttons
+            document.querySelectorAll('.btn, .feature-card, .stat-card').forEach(button => {
+                button.addEventListener('click', playClickSound);
+            });
+            
+            // Animate stats counting up
+            const statValues = document.querySelectorAll('.stat-value[data-target]');
+            
+            const animateValue = (element, start, end, duration) => {
+                let startTimestamp = null;
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    const value = Math.floor(progress * (end - start) + start);
+                    element.textContent = value + (element.textContent.includes('+') ? '+' : '') + 
+                                          (element.textContent.includes('%') ? '%' : '');
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    }
+                };
+                window.requestAnimationFrame(step);
+            };
+            
+            // Animate stats when they come into view
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const element = entry.target;
+                        const target = parseInt(element.getAttribute('data-target'));
+                        if (!element.classList.contains('animated')) {
+                            animateValue(element, 0, target, 2000);
+                            element.classList.add('animated');
+                        }
+                        observer.unobserve(element);
+                    }
+                });
+            }, {
+                threshold: 0.5
+            });
+            
+            statValues.forEach(stat => {
+                observer.observe(stat);
+            });
+            
+            // Add typewriter effect to tagline
+            const tagline = document.querySelector('.tagline');
+            const originalText = tagline.textContent;
+            tagline.textContent = '';
+            
+            let i = 0;
+            const typeWriter = () => {
+                if (i < originalText.length) {
+                    tagline.textContent += originalText.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 20);
+                }
+            };
+            
+            // Start typing after a short delay
+            setTimeout(typeWriter, 1000);
+            
+            // Add floating animation to logo
+            const logo = document.querySelector('.logo');
+            let floatDirection = 1;
+            
+            setInterval(() => {
+                const currentTransform = logo.style.transform || 'translateY(0px)';
+                const currentY = parseFloat(currentTransform.match(/translateY\(([^)]+)px\)/)?.[1] || 0);
+                
+                if (currentY >= 5) floatDirection = -1;
+                if (currentY <= -5) floatDirection = 1;
+                
+                logo.style.transform = `translateY(${currentY + floatDirection * 0.5}px)`;
+            }, 100);
+            
+            // Check if user is on Windows
+            function isWindows() {
+                return navigator.userAgent.indexOf('Windows') !== -1;
+            }
+            
+            // Show warning if not on Windows
+            if (!isWindows()) {
+                const downloadInfo = document.querySelector('.download-info');
+                if (downloadInfo) {
+                    const warning = document.createElement('div');
+                    warning.style.color = 'var(--medium-gray)';
+                    warning.style.marginTop = '20px';
+                    warning.style.fontSize = '0.95rem';
+                    warning.style.fontWeight = '500';
+                    warning.style.border = '2px solid var(--light-gray)';
+                    warning.style.padding = '12px 20px';
+                    warning.style.borderRadius = '8px';
+                    warning.style.background = 'var(--off-white)';
+                    warning.innerHTML = '<i class="fas fa-exclamation-circle" style="margin-right: 10px;"></i>Windows version only. macOS/Linux versions coming 2025.';
+                    downloadInfo.parentNode.insertBefore(warning, downloadInfo.nextSibling);
+                }
+            }
+        }
+        
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
 </body>
 </html>
-
