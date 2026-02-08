@@ -416,7 +416,7 @@
       const toast = document.getElementById('toast');
       
       // Check if download link is still placeholder
-      if (downloadBtn.href.includes('https://github.com/amir123104/cubyApp_installer/raw/refs/heads/main/cubyApp_Setup.exe')) {
+      if (downloadBtn.href.includes('no_link')) {
         downloadBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Configure Download Link';
         downloadBtn.style.background = '#ef4444';
         downloadBtn.onclick = function(e) {
@@ -488,4 +488,5 @@
   </script>
 </body>
 </html>
+
 
