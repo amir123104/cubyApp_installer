@@ -348,7 +348,7 @@
         When you upload your .exe to GitHub, replace the href below with the direct download link
         Example: https://github.com/yourusername/yourrepo/releases/download/v1.0.0/CubyApp.exe
       -->
-      <a href="YOUR_EXE_DOWNLOAD_LINK_HERE" class="download-btn" id="download-btn">
+      <a href="https://github.com/amir123104/cubyApp_installer/raw/refs/heads/main/cubyApp_Setup.exe" class="download-btn" id="download-btn">
         <i class="fas fa-download"></i>
         Download for Windows
       </a>
@@ -416,7 +416,7 @@
       const toast = document.getElementById('toast');
       
       // Check if download link is still placeholder
-      if (downloadBtn.href.includes('YOUR_EXE_DOWNLOAD_LINK_HERE')) {
+      if (downloadBtn.href.includes('https://github.com/amir123104/cubyApp_installer/raw/refs/heads/main/cubyApp_Setup.exe')) {
         downloadBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Configure Download Link';
         downloadBtn.style.background = '#ef4444';
         downloadBtn.onclick = function(e) {
@@ -488,3 +488,4 @@
   </script>
 </body>
 </html>
+
