@@ -1,966 +1,490 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cuby App Download</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --pure-black: #000000;
-            --dark-gray: #1a1a1a;
-            --medium-gray: #333333;
-            --light-gray: #666666;
-            --lighter-gray: #999999;
-            --lightest-gray: #cccccc;
-            --off-white: #f5f5f5;
-            --pure-white: #ffffff;
-            --border-gray: #e5e5e5;
-        }
-        
-        * {
-            box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-        }
-        
-        body {
-            background-color: var(--pure-white);
-            color: var(--pure-black);
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
-        }
-        
-        /* Geometric background pattern */
-        body:before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(0, 0, 0, 0.03) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(0, 0, 0, 0.03) 0%, transparent 20%),
-                linear-gradient(45deg, transparent 49%, rgba(0, 0, 0, 0.02) 50%, transparent 51%),
-                linear-gradient(-45deg, transparent 49%, rgba(0, 0, 0, 0.02) 50%, transparent 51%);
-            background-size: 400px 400px;
-            opacity: 0.6;
-            z-index: -1;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 60px 20px;
-        }
-        
-        .header {
-            text-align: center;
-            margin-bottom: 80px;
-            position: relative;
-        }
-        
-        .logo {
-            font-size: 3.8rem;
-            font-weight: 800;
-            color: var(--pure-black);
-            letter-spacing: -1px;
-            margin-bottom: 16px;
-            display: inline-block;
-            position: relative;
-        }
-        
-        .logo:after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 120px;
-            height: 4px;
-            background: var(--pure-black);
-        }
-        
-        .tagline {
-            color: var(--light-gray);
-            font-size: 1.25rem;
-            font-weight: 400;
-            max-width: 700px;
-            margin: 30px auto 0;
-            line-height: 1.6;
-        }
-        
-        .card {
-            background: var(--pure-white);
-            border-radius: 24px;
-            padding: 50px;
-            margin-bottom: 40px;
-            border: 2px solid var(--pure-black);
-            box-shadow: 12px 12px 0px 0px var(--pure-black);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .card:hover {
-            transform: translate(-4px, -4px);
-            box-shadow: 16px 16px 0px 0px var(--pure-black);
-        }
-        
-        .card:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--pure-black);
-        }
-        
-        .card-title {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 30px;
-            color: var(--pure-black);
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-        
-        .card-title i {
-            color: var(--pure-black);
-            background: var(--off-white);
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid var(--pure-black);
-        }
-        
-        .description {
-            color: var(--medium-gray);
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 50px;
-            font-weight: 400;
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 60px;
-        }
-        
-        .feature-card {
-            background: var(--off-white);
-            border-radius: 16px;
-            padding: 32px;
-            border: 2px solid var(--pure-black);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        
-        .feature-card:hover {
-            background: var(--pure-white);
-            transform: translateY(-8px);
-            box-shadow: 8px 8px 0px 0px var(--pure-black);
-        }
-        
-        .feature-card:nth-child(odd):before {
-            content: '◼';
-            position: absolute;
-            top: -12px;
-            left: -12px;
-            color: var(--pure-black);
-            font-size: 24px;
-            background: var(--pure-white);
-            width: 24px;
-            height: 24px;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .feature-card:nth-child(even):before {
-            content: '◻';
-            position: absolute;
-            top: -12px;
-            left: -12px;
-            color: var(--pure-black);
-            font-size: 24px;
-            background: var(--pure-white);
-            width: 24px;
-            height: 24px;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .feature-icon {
-            font-size: 2.5rem;
-            color: var(--pure-black);
-            margin-bottom: 24px;
-            background: var(--pure-white);
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid var(--pure-black);
-        }
-        
-        .feature-title {
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: var(--pure-black);
-        }
-        
-        .feature-desc {
-            color: var(--medium-gray);
-            font-size: 1rem;
-            line-height: 1.7;
-        }
-        
-        .download-section {
-            text-align: center;
-            padding: 60px 0;
-            background: var(--off-white);
-            border-radius: 20px;
-            border: 2px solid var(--pure-black);
-            margin: 60px 0;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .download-section:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: repeating-linear-gradient(
-                90deg,
-                var(--pure-black),
-                var(--pure-black) 20px,
-                transparent 20px,
-                transparent 40px
-            );
-        }
-        
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 22px 50px;
-            background: var(--pure-black);
-            color: var(--pure-white);
-            border: 2px solid var(--pure-black);
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 1.3rem;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            gap: 16px;
-            text-decoration: none;
-            letter-spacing: -0.5px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .btn:hover {
-            background: var(--pure-white);
-            color: var(--pure-black);
-            transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-        }
-        
-        .btn:active {
-            transform: translateY(-2px);
-        }
-        
-        .btn:before {
-            content: '';
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cuby App Installer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-black: #111827;
+      --secondary-black: #1f2937;
+      --accent-blue: #000000;
+      --accent-green: #000000;
+      --accent-purple: #8b5cf6;
+      --light-bg: #f9fafb;
+      --border-color: #e5e7eb;
+      --text-primary: #111827;
+      --text-secondary: #6b7280;
+    }
+    
+    * {
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+      color: var(--text-primary);
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+    
+    /* Modern Navigation */
+    .navbar {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 0 24px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--primary-black);
+      padding: 8px 0;
+    }
+    
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      position: relative;
+    }
+    
+    /* Main Container */
+    .main-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 60px 24px;
+    }
+    
+    /* Download Card */
+    .download-card {
+      background: white;
+      border-radius: 20px;
+      padding: 48px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+      border: 1px solid var(--border-color);
+      text-align: center;
+    }
+    
+    .app-icon {
+      width: 120px;
+      height: 120px;
+      background: var(--primary-black);
+      border-radius: 20px;
+      margin: 0 auto 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    
+    .app-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--primary-black);
+      margin-bottom: 12px;
+    }
+    
+    .app-subtitle {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+    
+    /* Download Button */
+    .download-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px 48px;
+      background: var(--accent-blue);
+      color: white;
+      border-radius: 12px;
+      font-size: 1.125rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    
+    .download-btn:hover {
+      background: #333333;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    }
+    
+    .download-btn i {
+      font-size: 1.25rem;
+    }
+    
+    .download-size {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-bottom: 40px;
+    }
+    
+    /* Features */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+    }
+    
+    .feature-card {
+      background: var(--light-bg);
+      border-radius: 12px;
+      padding: 24px;
+      border: 1px solid var(--border-color);
+      text-align: left;
+    }
+    
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--primary-black);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      margin-bottom: 16px;
+    }
+    
+    .feature-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    
+    .feature-desc {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    
+    /* System Requirements */
+    .requirements {
+      background: var(--light-bg);
+      border-radius: 12px;
+      padding: 24px;
+      margin-top: 48px;
+      text-align: left;
+    }
+    
+    .requirements-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    
+    .requirements-list {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .requirements-list li {
+      padding: 8px 0;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .requirements-list i {
+      color: var(--accent-blue);
+    }
+    
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--primary-black);
+      color: white;
+      padding: 16px 24px;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      z-index: 1001;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      animation: slideIn 0.3s ease;
+      display: none;
+    }
+    
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .main-container {
+        padding: 40px 20px;
+      }
+      
+      .download-card {
+        padding: 32px 24px;
+      }
+      
+      .app-title {
+        font-size: 2rem;
+      }
+      
+      .download-btn {
+        padding: 16px 32px;
+        font-size: 1rem;
+      }
+      
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .app-icon {
+        width: 100px;
+        height: 100px;
+      }
+      
+      .app-title {
+        font-size: 1.75rem;
+      }
+      
+      .download-btn {
+        width: 100%;
+        padding: 16px 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="#" class="logo">
+        <div class="logo-icon">
+          <!-- Cuby Logo -->
+          <div style="width: 40px; height: 40px; background: #000000; border-radius: 4px; position: absolute;"></div>
+          <!-- LEFT Triangle -->
+          <div style="
+            width: 40px;
+            height: 40px;
+            background: #ffffff;
+            clip-path: polygon(0% 100%, 100% 0%, 10% 10%);
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-        
-        .btn:hover:before {
-            width: 300px;
-            height: 300px;
-        }
-        
-        .btn-lg {
-            padding: 26px 60px;
-            font-size: 1.4rem;
-        }
-        
-        .download-info {
-            margin-top: 30px;
-            color: var(--light-gray);
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-        
-        .version-badge {
-            display: inline-block;
-            background: var(--pure-black);
-            color: var(--pure-white);
-            padding: 8px 20px;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-left: 12px;
-            border: 2px solid var(--pure-black);
-        }
-        
-        .system-requirements {
-            background: var(--off-white);
-            border-radius: 20px;
-            padding: 40px;
-            margin-top: 60px;
-            border: 2px solid var(--pure-black);
-            position: relative;
-        }
-        
-        .requirements-title {
-            font-size: 1.6rem;
-            font-weight: 700;
-            margin-bottom: 30px;
-            color: var(--pure-black);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .requirements-title:before {
-            content: '⚙';
-            font-size: 1.8rem;
-        }
-        
-        .requirements-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            columns: 2;
-            column-gap: 40px;
-        }
-        
-        .requirements-list li {
-            color: var(--medium-gray);
-            margin-bottom: 16px;
-            padding-left: 36px;
-            position: relative;
-            font-size: 1.05rem;
-            break-inside: avoid;
-        }
-        
-        .requirements-list li:before {
-            content: '▸';
+            transform: translate(-49%, -50%);
+          "></div>
+          <!-- RIGHT Triangle -->
+          <div style="
+            width: 40px;
+            height: 40px;
+            background: #ffffff;
+            clip-path: polygon(100% 0%, 90% 90%, 0% 100%);
             position: absolute;
-            left: 0;
-            color: var(--pure-black);
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-        
-        .footer {
-            text-align: center;
-            padding: 60px 0 40px;
-            color: var(--light-gray);
-            font-size: 1rem;
-            border-top: 2px solid var(--pure-black);
-            margin-top: 80px;
-            position: relative;
-        }
-        
-        .footer:before {
-            content: '';
-            position: absolute;
-            top: -2px;
+            top: 50%;
             left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 4px;
-            background: var(--pure-black);
-        }
-        
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-top: 30px;
-            flex-wrap: wrap;
-        }
-        
-        .footer-links a {
-            color: var(--medium-gray);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            position: relative;
-            padding: 8px 0;
-        }
-        
-        .footer-links a:hover {
-            color: var(--pure-black);
-        }
-        
-        .footer-links a:after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--pure-black);
-            transition: width 0.3s ease;
-        }
-        
-        .footer-links a:hover:after {
-            width: 100%;
-        }
-        
-        .screenshot-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-            margin: 60px 0;
-        }
-        
-        .screenshot {
-            border-radius: 16px;
-            overflow: hidden;
-            border: 2px solid var(--pure-black);
-            transition: transform 0.3s ease;
-            background: var(--pure-white);
-            aspect-ratio: 16/9;
-            position: relative;
-        }
-        
-        .screenshot:hover {
-            transform: translateY(-12px);
-            box-shadow: 8px 8px 0px 0px var(--pure-black);
-        }
-        
-        .screenshot-placeholder {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: var(--light-gray);
-            font-size: 1.1rem;
-            background: repeating-linear-gradient(
-                45deg,
-                var(--off-white),
-                var(--off-white) 20px,
-                var(--pure-white) 20px,
-                var(--pure-white) 40px
-            );
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 30px;
-            margin: 60px 0;
-        }
-        
-        .stat-card {
-            background: var(--pure-white);
-            border-radius: 20px;
-            padding: 36px;
-            text-align: center;
-            border: 2px solid var(--pure-black);
-            position: relative;
-            transition: transform 0.3s ease;
-        }
-        
-        .stat-card:hover {
-            transform: translateY(-8px);
-        }
-        
-        .stat-value {
-            font-size: 3.2rem;
-            font-weight: 800;
-            color: var(--pure-black);
-            margin-bottom: 12px;
-            line-height: 1;
-        }
-        
-        .stat-label {
-            font-size: 1.1rem;
-            color: var(--medium-gray);
-            font-weight: 500;
-        }
-        
-        .toast {
-            position: fixed;
-            bottom: 40px;
-            right: 40px;
-            background: var(--pure-black);
-            color: var(--pure-white);
-            padding: 20px 28px;
-            border-radius: 12px;
-            box-shadow: 8px 8px 0px 0px rgba(0, 0, 0, 0.3);
-            z-index: 1000;
-            animation: slideIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            display: none;
-            border: 2px solid var(--pure-black);
-            max-width: 400px;
-        }
-        
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%) scale(0.8);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0) scale(1);
-                opacity: 1;
-            }
-        }
-        
-        .progress-bar {
-            width: 100%;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 2px;
-            margin-top: 12px;
-            overflow: hidden;
-        }
-        
-        .progress-fill {
-            width: 0%;
-            height: 100%;
-            background: var(--pure-white);
-            transition: width 3s linear;
-        }
-        
-        @media (max-width: 1024px) {
-            .requirements-list {
-                columns: 1;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .container {
-                padding: 40px 20px;
-            }
-            
-            .logo {
-                font-size: 2.8rem;
-            }
-            
-            .card {
-                padding: 30px 20px;
-                margin-left: -10px;
-                margin-right: -10px;
-            }
-            
-            .card-title {
-                font-size: 1.6rem;
-            }
-            
-            .card-title i {
-                width: 50px;
-                height: 50px;
-                font-size: 1.2rem;
-            }
-            
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .btn-lg {
-                padding: 20px 40px;
-                font-size: 1.2rem;
-            }
-            
-            .footer-links {
-                flex-direction: column;
-                gap: 20px;
-            }
-            
-            .download-info {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .screenshot-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 20px;
-            }
-            
-            .stat-value {
-                font-size: 2.5rem;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .logo {
-                font-size: 2.2rem;
-            }
-            
-            .tagline {
-                font-size: 1.1rem;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <div class="logo">CUBY</div>
-            <div class="tagline">
-                A minimalist, powerful desktop application designed for maximum productivity 
-                and seamless workflow management
-            </div>
+            transform: translate(-52%, -50%);
+          "></div>
         </div>
-        
-        <!-- Stats Section -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-value" data-target="92">0</div>
-                <div class="stat-label">MB only</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" data-target="150">0</div>
-                <div class="stat-label">Active Users</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" data-target="91">0</div>
-                <div class="stat-label">% Satisfaction</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value">v1.0</div>
-                <div class="stat-label">Latest Version</div>
-            </div>
-        </div>
-        
-        <!-- Main Card -->
-        <div class="card">
-            <div class="card-title">
-                <i class="fas fa-download"></i>
-                Download Cuby
-                <span class="version-badge">Version 1.0</span>
-            </div>
-            
-            <div class="description">
-            </div>
-            
-            <!-- Features Grid -->
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <div class="feature-title">Performance Optimized</div>
-                    <div class="feature-desc">
-                        Engineered for speed with minimal resource footprint. Zero bloat, maximum efficiency.
-                    </div>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <div class="feature-title">Complete Privacy</div>
-                    <div class="feature-desc">
-                        privecy First. built with firebase
-                    </div>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-infinity"></i>
-                    </div>
-                    <div class="feature-title">Easy.</div>
-                    <div class="feature-desc">
-                        Install, run, and your in.
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Screenshots -->
-            <div class="screenshot-grid">
-                <div class="screenshot">
-                    <div class="screenshot-placeholder">
-                        <i class="fas fa-desktop" style="font-size: 3rem; margin-bottom: 20px; color: var(--light-gray);"></i>
-                        <div style="font-weight: 600; color: var(--medium-gray);">Main Interface</div>
-                        <div style="font-size: 0.9rem; margin-top: 8px; color: var(--lighter-gray);">Clean, distraction-free workspace</div>
-                    </div>
-                </div>
-                <div class="screenshot">
-                    <div class="screenshot-placeholder">
-                        <i class="fas fa-sliders-h" style="font-size: 3rem; margin-bottom: 20px; color: var(--light-gray);"></i>
-                        <div style="font-weight: 600; color: var(--medium-gray);">Control Panel</div>
-                        <div style="font-size: 0.9rem; margin-top: 8px; color: var(--lighter-gray);">Advanced customization options</div>
-                    </div>
-                </div>
-                <div class="screenshot">
-                    <div class="screenshot-placeholder">
-                        <i class="fas fa-chart-bar" style="font-size: 3rem; margin-bottom: 20px; color: var(--light-gray);"></i>
-                        <div style="font-weight: 600; color: var(--medium-gray);">Easy connection</div>
-                        <div style="font-size: 0.9rem; margin-top: 8px; color: var(--lighter-gray);">Easy connection to your Cuby</div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Download Section -->
-            <div class="download-section">
-                <a href="https://github.com/amir123104/cubyApp_installer/releases/download/v1.0.0/downloads-cubyApp.zip" 
-                   download 
-                   class="btn btn-lg"
-                   id="download-btn">
-                    <i class="fas fa-arrow-down"></i>
-                    Download
-                </a>
-                <div class="download-info">
-                    <span><i class="fas fa-hdd"></i> 239 KB Installer</span>
-                    <span><i class="fas fa-window-restore"></i> Windows 10/11 (64-bit)</span>
-                    <span><i class="fas fa-calendar-alt"></i> Updated: December 2025</span>
-                </div>
-            </div>
-            
-            <!-- System Requirements -->
-            <div class="system-requirements">
-                <div class="requirements-title">System Requirements</div>
-                <ul class="requirements-list">
-                    <li>Windows 10 version 1909 or higher</li>
-                    <li>Windows 11 any version</li>
-                    <li>2 GB RAM minimum (4 GB recommended)</li>
-                    <li>2 GB available storage space</li>
-                    <li>USB connection port</li>
-                    <li>Internet connection</li>
-                </ul>
-            </div>
-        </div>
-        
-        <!-- Footer -->
-        <div class="footer">
-            <div style="font-size: 0.95rem; color: var(--light-gray); margin-bottom: 10px;">
-                © 2024 Cuby Systems. All rights reserved.
-            </div>
-            <div class="footer-links">
-                <a href="#"><i class="fas fa-file-alt" style="margin-right: 8px;"></i>Documentation</a>
-                <a href="#"><i class="fas fa-lock" style="margin-right: 8px;"></i>Privacy</a>
-                <a href="#"><i class="fas fa-balance-scale" style="margin-right: 8px;"></i>Terms</a>
-                <a href="#"><i class="fas fa-question-circle" style="margin-right: 8px;"></i>Support</a>
-                <a href="#"><i class="fas fa-envelope" style="margin-right: 8px;"></i>Contact</a>
-            </div>
-        </div>
+        <span>Cuby Installer</span>
+      </a>
     </div>
-    
-    <!-- Toast Notification -->
-    <div id="toast" class="toast">
-        <i class="fas fa-download" style="font-size: 1.5rem;"></i>
-        <div>
-            <div id="toast-message" style="font-weight: 600;">Starting download...</div>
-            <div class="progress-bar">
-                <div class="progress-fill" id="progress-fill"></div>
-            </div>
-        </div>
-    </div>
+  </nav>
 
-    <script>
-        // Initialize the application
-        function initApp() {
-            // Setup download button click handler
-            const downloadBtn = document.getElementById('download-btn');
-            const toast = document.getElementById('toast');
-            const toastMessage = document.getElementById('toast-message');
-            const progressFill = document.getElementById('progress-fill');
-            
-            downloadBtn.addEventListener('click', function(e) {
-                // Show toast notification
-                toastMessage.textContent = 'Downloading Cuby v2.0...';
-                progressFill.style.width = '0%';
-                toast.style.display = 'flex';
-                
-                // Simulate download progress
-                setTimeout(() => {
-                    progressFill.style.width = '30%';
-                }, 500);
-                
-                setTimeout(() => {
-                    progressFill.style.width = '70%';
-                    toastMessage.textContent = 'Installer (92 MB) downloading...';
-                }, 1500);
-                
-                setTimeout(() => {
-                    progressFill.style.width = '100%';
-                    toastMessage.textContent = 'Download complete!';
-                    
-                    // Hide toast after 2 seconds
-                    setTimeout(() => {
-                        toast.style.display = 'none';
-                        progressFill.style.width = '0%';
-                    }, 2000);
-                }, 3000);
-                
-                // Optional: Track download (you can add analytics here)
-                console.log('Download started: Cuby v2.0');
-            });
-            
-            // Add click sound effect (optional)
-            const playClickSound = () => {
-                // Simple click sound simulation
-                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                const oscillator = audioContext.createOscillator();
-                const gainNode = audioContext.createGain();
-                
-                oscillator.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-                
-                oscillator.frequency.value = 800;
-                oscillator.type = 'sine';
-                
-                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
-                
-                oscillator.start();
-                oscillator.stop(audioContext.currentTime + 0.1);
-            };
-            
-            // Add sound to buttons
-            document.querySelectorAll('.btn, .feature-card, .stat-card').forEach(button => {
-                button.addEventListener('click', playClickSound);
-            });
-            
-            // Animate stats counting up
-            const statValues = document.querySelectorAll('.stat-value[data-target]');
-            
-            const animateValue = (element, start, end, duration) => {
-                let startTimestamp = null;
-                const step = (timestamp) => {
-                    if (!startTimestamp) startTimestamp = timestamp;
-                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                    const value = Math.floor(progress * (end - start) + start);
-                    element.textContent = value + (element.textContent.includes('+') ? '+' : '') + 
-                                          (element.textContent.includes('%') ? '%' : '');
-                    if (progress < 1) {
-                        window.requestAnimationFrame(step);
-                    }
-                };
-                window.requestAnimationFrame(step);
-            };
-            
-            // Animate stats when they come into view
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const element = entry.target;
-                        const target = parseInt(element.getAttribute('data-target'));
-                        if (!element.classList.contains('animated')) {
-                            animateValue(element, 0, target, 2000);
-                            element.classList.add('animated');
-                        }
-                        observer.unobserve(element);
-                    }
-                });
-            }, {
-                threshold: 0.5
-            });
-            
-            statValues.forEach(stat => {
-                observer.observe(stat);
-            });
-            
-            // Add typewriter effect to tagline
-            const tagline = document.querySelector('.tagline');
-            const originalText = tagline.textContent;
-            tagline.textContent = '';
-            
-            let i = 0;
-            const typeWriter = () => {
-                if (i < originalText.length) {
-                    tagline.textContent += originalText.charAt(i);
-                    i++;
-                    setTimeout(typeWriter, 20);
-                }
-            };
-            
-            // Start typing after a short delay
-            setTimeout(typeWriter, 1000);
-            
-            // Add floating animation to logo
-            const logo = document.querySelector('.logo');
-            let floatDirection = 1;
-            
-            setInterval(() => {
-                const currentTransform = logo.style.transform || 'translateY(0px)';
-                const currentY = parseFloat(currentTransform.match(/translateY\(([^)]+)px\)/)?.[1] || 0);
-                
-                if (currentY >= 5) floatDirection = -1;
-                if (currentY <= -5) floatDirection = 1;
-                
-                logo.style.transform = `translateY(${currentY + floatDirection * 0.5}px)`;
-            }, 100);
-            
-            // Check if user is on Windows
-            function isWindows() {
-                return navigator.userAgent.indexOf('Windows') !== -1;
-            }
-            
-            // Show warning if not on Windows
-            if (!isWindows()) {
-                const downloadInfo = document.querySelector('.download-info');
-                if (downloadInfo) {
-                    const warning = document.createElement('div');
-                    warning.style.color = 'var(--medium-gray)';
-                    warning.style.marginTop = '20px';
-                    warning.style.fontSize = '0.95rem';
-                    warning.style.fontWeight = '500';
-                    warning.style.border = '2px solid var(--light-gray)';
-                    warning.style.padding = '12px 20px';
-                    warning.style.borderRadius = '8px';
-                    warning.style.background = 'var(--off-white)';
-                    warning.innerHTML = '<i class="fas fa-exclamation-circle" style="margin-right: 10px;"></i>Windows version only. macOS/Linux versions coming 2025.';
-                    downloadInfo.parentNode.insertBefore(warning, downloadInfo.nextSibling);
-                }
-            }
-        }
+  <!-- Main Content -->
+  <div class="main-container">
+    <div class="download-card">
+      <!-- App Icon -->
+      <div class="app-icon">
+        <!-- Cuby Logo (large version) -->
+        "></div>
+      </div>
+      
+      <!-- App Title -->
+      <h1 class="app-title">install CubyApp</h1>
+      <p class="app-subtitle">
         
-        // Initialize when page loads
-        document.addEventListener('DOMContentLoaded', initApp);
-    </script>
+      </p>
+      
+      <!-- 
+        REPLACE THIS LINK WITH YOUR ACTUAL .EXE DOWNLOAD LINK
+        When you upload your .exe to GitHub, replace the href below with the direct download link
+        Example: https://github.com/yourusername/yourrepo/releases/download/v1.0.0/CubyApp.exe
+      -->
+      <a href="YOUR_EXE_DOWNLOAD_LINK_HERE" class="download-btn" id="download-btn">
+        <i class="fas fa-download"></i>
+        Download for Windows
+      </a>
+      
+      <div class="download-size">Version 1.0.0 • 45 MB • Windows 10/11</div>
+      
+      <!-- Features -->
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-edit"></i>
+          </div>
+          <h3 class="feature-title">Visual Editor</h3>
+          <p class="feature-desc">Create 8x8 LED animations with an intuitive drag-and-drop interface.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-microchip"></i>
+          </div>
+          <h3 class="feature-title">Device Control</h3>
+          <p class="feature-desc">Connect and control multiple Cuby LED matrix devices wirelessly.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-share-alt"></i>
+          </div>
+          <h3 class="feature-title">Share Animations</h3>
+          <p class="feature-desc">Export animations and share them with friends or the community.</p>
+        </div>
+      </div>
+      
+      <!-- System Requirements -->
+      <div class="requirements">
+        <h3 class="requirements-title">System Requirements</h3>
+        <ul class="requirements-list">
+          <li><i class="fas fa-check"></i> Internet connection for device pairing</li>
+        </ul>
+      </div>
+      
+      <!-- Installation Instructions -->
+      <div class="requirements" style="margin-top: 24px;">
+        <h3 class="requirements-title">Installation Instructions</h3>
+        <ul class="requirements-list">
+          <li><i class="fas fa-1"></i> Click the Download button above</li>
+          <li><i class="fas fa-2"></i> Run the downloaded .exe file</li>
+          <li><i class="fas fa-3"></i> Follow the installation wizard</li>
+          <li><i class="fas fa-4"></i> Launch CubyApp from your desktop</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">
+    <i class="fas fa-check-circle"></i>
+    <span>Download starting...</span>
+  </div>
+
+  <script>
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', function() {
+      const downloadBtn = document.getElementById('download-btn');
+      const toast = document.getElementById('toast');
+      
+      // Check if download link is still placeholder
+      if (downloadBtn.href.includes('YOUR_EXE_DOWNLOAD_LINK_HERE')) {
+        downloadBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Configure Download Link';
+        downloadBtn.style.background = '#ef4444';
+        downloadBtn.onclick = function(e) {
+          e.preventDefault();
+          showToast('Please update the download link in the code!', 'warning');
+          
+          // Scroll to instructions
+          const requirements = document.querySelector('.requirements');
+          requirements.style.animation = 'none';
+          requirements.offsetHeight; // Trigger reflow
+          requirements.style.animation = 'pulse 2s infinite';
+          
+          setTimeout(() => {
+            requirements.style.animation = '';
+          }, 2000);
+        };
+      } else {
+        // Setup download tracking
+        downloadBtn.addEventListener('click', function() {
+          showToast('Download starting...');
+          
+          // You can add analytics here
+          console.log('Download initiated:', new Date().toISOString());
+        });
+      }
+      
+      // Show toast notification
+      function showToast(message, type = 'info') {
+        const icon = type === 'warning' ? 'fa-exclamation-triangle' : 'fa-check-circle';
+        toast.innerHTML = `<i class="fas ${icon}"></i><span>${message}</span>`;
+        toast.style.display = 'flex';
+        
+        setTimeout(() => {
+          toast.style.display = 'none';
+        }, 3000);
+      }
+      
+      // Add CSS for pulse animation
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes pulse {
+          0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
+          70% { box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); }
+          100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+        }
+      `;
+      document.head.appendChild(style);
+    });
+    
+    // Simple download progress simulation
+    function simulateDownload() {
+      const btn = document.getElementById('download-btn');
+      const originalText = btn.innerHTML;
+      
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Preparing download...';
+      btn.disabled = true;
+      
+      setTimeout(() => {
+        btn.innerHTML = '<i class="fas fa-check"></i> Download Complete!';
+        btn.style.background = '#10b981';
+        
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          btn.disabled = false;
+          btn.style.background = '';
+        }, 2000);
+      }, 1500);
+    }
+  </script>
 </body>
 </html>
